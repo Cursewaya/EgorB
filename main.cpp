@@ -4,6 +4,7 @@ int main()
 	//ѕока готовы только + и - дл€ целых неотрицательных
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
+
 	string ch="Y";
 	while (ch != "N")
 	{

@@ -39,4 +39,5 @@ public:
 	void scan();
 
 };
+
 #endif
