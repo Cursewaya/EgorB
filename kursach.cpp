@@ -6,40 +6,26 @@ Big operator+(Big a, Big b)
 	reverse(b.bef.begin(), b.bef.end());
 	reverse(a.bef.begin(), a.bef.end());
 	int k = 0, i = 0;
-	if (a.bef.size() >= b.bef.size())
+	if (b > a)
+	{
+		Big t = a;
+		a = b;
+		b = t;
+	}
+	while (i < a.bef.size())
+	{
+		if (i < b.bef.size())
 		{
-			while (i < a.bef.size())
-			{
-				if (i < b.bef.size())
-				{
-					c.bef.push_back((a.bef[i] + b.bef[i] + k) % 10);
-					k = (a.bef[i] + b.bef[i] + k) / 10;
-				}
-				else
-				{
-					c.bef.push_back((a.bef[i] + k) % 10);
-					k = (a.bef[i] + k) / 10;
-				}
-				++i;
-			}
+			c.bef.push_back((a.bef[i] + b.bef[i] + k) % 10);
+			k = (a.bef[i] + b.bef[i] + k) / 10;
 		}
-	else
+		else
 		{
-			while (i < b.bef.size())
-			{
-				if (i < a.bef.size())
-				{
-					c.bef.push_back((a.bef[i] + b.bef[i] + k) % 10);
-					k = (a.bef[i] + b.bef[i] + k) / 10;
-				}
-				else
-				{
-					c.bef.push_back((b.bef[i] + k) % 10);
-					k = (b.bef[i] + k) / 10;
-				}
-				++i;
-			}
+			c.bef.push_back((a.bef[i] + k) % 10);
+			k = (a.bef[i] + k) / 10;
 		}
+		++i;
+	}
 	if (k != 0)
 		c.bef.push_back(k);
 	reverse(c.bef.begin(), c.bef.end());
@@ -101,10 +87,10 @@ void Big::scan()
 	{
 		bef.push_back(int(s[i]) - 48);
 	}
-	/*cout << "Ââåäèòå äåéñòâèå(+,-,*,/,%): ";
+	/*cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¤Ã¥Ã©Ã±Ã²Ã¢Ã¨Ã¥(+,-,*,/,%): ";
 	char z;
 	cin >> z;
-	cout << "Ââåäèòå âòîðîå ÷èñëî: ";*/
+	cout << "Ã‚Ã¢Ã¥Ã¤Ã¨Ã²Ã¥ Ã¢Ã²Ã®Ã°Ã®Ã¥ Ã·Ã¨Ã±Ã«Ã®: ";*/
 }
 
 void Big::operator=(Big a)
