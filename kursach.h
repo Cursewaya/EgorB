@@ -1,10 +1,13 @@
 #ifndef KURSACH
 #define KURSACH
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <string>
 #include <windows.h>
+#include <math.h>
+
 using namespace std;
 class Big
 {
@@ -27,6 +30,8 @@ public:
 	}
 	Big(long long s)
 	{
+		bef.push_back(s % 10);
+		s = s / 10;
 		while (s > 0)
 		{
 			bef.push_back(s % 10);
@@ -41,6 +46,7 @@ public:
 		}
 	}
 	~Big() {}
+	void cut();
 	friend Big operator +(Big a, Big b);
 	friend Big operator /(Big a, Big b);
 	friend Big operator %(Big a, Big b);
@@ -52,5 +58,6 @@ public:
 	void operator =(Big b);
 	friend ostream& operator<<(ostream& os, const Big& s);
 	friend istream& operator>> (istream& is, Big& s);
+
 };
 #endif
