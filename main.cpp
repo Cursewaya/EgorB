@@ -1,10 +1,6 @@
 #include "kursach.h"
 int main()
 {
-	/*
-	Готовы: +,-,/ и %. Последние два буду переделывать через умножение,
-	а то (3*10^15)/3 будет считать примерно 31 млн лет
-	*/
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
@@ -14,11 +10,11 @@ int main()
 		Big a, b,c;
 		char z;
 		cout << "Введите первое число:";
-		a.scan();
+		cin >> a;
 		cout << "Введите действие(+,-,%,/): ";
 		cin >> z;
 		cout << "Введите второе число:";
-		b.scan();
+		cin >> b;
 		switch (int(z))
 		{
 			case int('+') :
@@ -33,12 +29,20 @@ int main()
 			case int('/') :
 				c = a / b;
 				break;
+			case int('*') :
+				c = a * b;
+				break;
 			default:
 				break;
 		}
-		c.print();
+		cout <<a<<endl<<b<<endl<<c;
 		cout << "Продолжить? (Y or N):";
 		cin >> ch;
 	}
+	/*Big o("123456789");
+	long long k = 111111111;
+	Big d(k);
+	Big c("12345678");
+	cout <<d<<endl<<o<<endl<< (o /d)<<endl<<o%d<<endl<<(o-c)%d;*/
 	return 0;
 }
