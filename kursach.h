@@ -9,11 +9,29 @@ using namespace std;
 class Big
 {
 private:
-	vector<int>bef;
+	vector<int> bef;
 public:
-	Big()
+	Big(){}
+	Big(string s)
 	{
-		//cout << "open " << this << endl;
+		int check = 0;
+		if (s[0] == '-')
+		{
+			check = 2;
+			bef.push_back((int(s[1]) - 48) * -1);
+		}
+		for (int i = 0 + check; i < s.size(); ++i)
+		{
+			bef.push_back(int(s[i]) - 48);
+		}
+	}
+	Big(long long s)
+	{
+		while (s > 0)
+		{
+			bef.push_back(s % 10);
+			s = s / 10;
+		}
 	}
 	Big(vector<int>&b)
 	{
@@ -21,23 +39,18 @@ public:
 		{
 			bef.push_back( b[i]);
 		}
-		//cout << "open " << this << endl;
 	}
-	~Big()
-	{
-		//cout << "close " << this << endl;
-	}
-
+	~Big() {}
 	friend Big operator +(Big a, Big b);
-
 	friend Big operator /(Big a, Big b);
+	friend Big operator %(Big a, Big b);
 	friend Big operator -(Big a, Big b);
 	friend Big operator *(Big a, Big b);
+	friend Big operator *(Big a, int b);
+
 	friend bool operator >(Big a, Big b);
 	void operator =(Big b);
-	void print();
-	void scan();
-
+	friend ostream& operator<<(ostream& os, const Big& s);
+	friend istream& operator>> (istream& is, Big& s);
 };
-
 #endif
