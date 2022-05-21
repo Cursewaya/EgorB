@@ -3,7 +3,11 @@ int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
+	/*
+	Вся арифметика готова. Пытаюсь "выразить" + через - или наоборот,чтоб уменьшить код
+	+ теперь перегружены cin и cout
+	+ Добавил конструкторы для Big(string) и Big(long lnog)
+	*/
 	string ch="Y";
 	while (ch != "N")
 	{
