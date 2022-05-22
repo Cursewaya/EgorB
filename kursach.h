@@ -11,7 +11,6 @@
 using namespace std;
 class Big
 {
-private:
 	vector<int> bef;
 public:
 	Big(){}
@@ -45,17 +44,26 @@ public:
 			bef.push_back( b[i]);
 		}
 	}
+	Big(const Big& b)
+	{
+		bef.erase(bef.begin(), bef.end());
+		bef.resize(b.bef.size());
+		for (int i = 0; i < bef.size(); ++i)
+		{
+			bef[i] = b.bef[i];
+		}
+	}
 	~Big() {}
-	void cut();
-	friend Big operator +(Big a, Big b);
-	friend Big operator /(Big a, Big b);
-	friend Big operator %(Big a, Big b);
-	friend Big operator -(Big a, Big b);
-	friend Big operator *(Big a, Big b);
-	friend Big operator *(Big a, int b);
+	Big operator +(Big b);
+	Big operator /(Big b);
+	Big operator %(Big b);
+	Big operator -(Big b);
+	Big operator *(Big b);
 
-	friend bool operator >(Big a, Big b);
-	void operator =(Big b);
+	friend Big operator *(Big a,long long b);
+	friend Big cut(Big);
+	friend bool operator >(Big a,Big b);
+	/*friend void operator =(Big a,Big b);*/
 	friend ostream& operator<<(ostream& os, const Big& s);
 	friend istream& operator>> (istream& is, Big& s);
 
