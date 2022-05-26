@@ -1,13 +1,9 @@
-#include "kursach.h"
+#include "Big.h"
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	/*
-	Вся арифметика готова. Пытаюсь "выразить" + через - или наоборот,чтоб уменьшить код
-	+ теперь перегружены cin и cout
-	+ Добавил конструкторы для Big(string) и Big(long lnog)
-	*/
+
 	string ch="Y";
 	while (ch != "N")
 	{
@@ -39,10 +35,23 @@ int main()
 			default:
 				break;
 		}
-		cout <<a<<endl<<b<<endl<<c;
+		cout <<c<<endl;
 		cout << "Продолжить? (Y or N):";
 		cin >> ch;
 	}
+	/*Big a, b;
+	
+		cin >> a >> b;
+		cout << "+"<<a + b << endl;
+		cout << a - b << endl;
+		cout << b - a << endl;
+		cout << a * b << endl;
+		cout << "a/b:" << a / b << endl;
+		cout << "b/a:" << b / a << endl;
+		cout << "a%b:" << a % b << endl;
+		cout<< "b%a:" << b % a;
+	
+	cout << endl << a << " " << b;*/
 	/*Big o("123456789");
 	long long k = 111111111;
 	Big d(k);
