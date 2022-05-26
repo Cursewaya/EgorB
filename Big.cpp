@@ -1,6 +1,18 @@
-#include "kursach.h"
-Big operator+(Big a, Big b)
+#include "Big.h"
+Big cut(Big a)
 {
+	while (a.bef.size() > 1 && a.bef[0] == 0)
+		a.bef.erase(a.bef.begin(), a.bef.begin() + 1);
+	return a;
+}
+
+Big Big::operator+(Big r)
+{
+	Big a, b;
+	b = r;
+	a = *this;
+	a=cut(a);
+	b=cut(b);
 	if (a.bef.size()>0 && a.bef[0] < 0)
 	{
 		a.bef[0] *= -1;
@@ -38,10 +50,16 @@ Big operator+(Big a, Big b)
 	if (k != 0)
 		c.bef.push_back(k);
 	reverse(c.bef.begin(), c.bef.end());
+	c=cut(c);
 	return c;
 }
-Big operator-(Big a, Big b)
+Big Big::operator-(Big r)
 {
+	*this=cut(*this);
+	r=cut(r);
+	Big a, b;
+	a = *this;
+	b = r;
 	Big c;
 	int znak = 1;
 	if (b.bef.size() > 0 && b.bef[0] < 0)
@@ -66,6 +84,7 @@ Big operator-(Big a, Big b)
 		b = ch;
 		z = -1;
 	}
+
 	reverse(b.bef.begin(), b.bef.end());
 	reverse(a.bef.begin(), a.bef.end());
 	
@@ -76,14 +95,15 @@ Big operator-(Big a, Big b)
 			if (i + 1 < a.bef.size())
 			{
 				a.bef[i] += 10;
-				a.bef[i] -= (b.bef[i] + k);
-				k = 1;
+				a.bef[i] = a.bef[i] -b.bef[i] - k;
+				k = ( b.bef[i] + k) / 10;
 			}
 		}
 		else
 		{
 			a.bef[i] -= (b.bef[i] + k);
 			k = 0;
+
 		}
 	}
 	for (int i = b.bef.size(); k != 0; ++i)
@@ -104,20 +124,15 @@ Big operator-(Big a, Big b)
 		}
 	}
 	reverse(a.bef.begin(), a.bef.end());
-	while(a.bef[0] == 0 && a.bef.size()>1)
-	{
-		a.bef.erase(a.bef.begin() , a.bef.begin() + 1);
-	}
+	a=cut(a);
 	a.bef[0] *= z;
 	return a;
-	/*for (int i = 0; i < t.bef.size(); ++i)
-	{
-		t.bef[i] *= -1;
-	}
-	return r+t;*/
 }
-Big operator*(Big a, Big b)
+Big Big::operator*(Big r)
 {
+	*this = cut(*this);
+	r = cut(r);
+	Big a = *this, b = r;
 	int znak = 1;
 	if (a.bef[0] < 0)
 	{
@@ -159,20 +174,16 @@ Big operator*(Big a, Big b)
 		ans = ans + t;
 		t.bef.erase(t.bef.begin(), t.bef.end());
 	}
-	while (ans.bef[0] == 0 && ans.bef.size() > 1)
-	{
-		ans.bef.erase(ans.bef.begin(), ans.bef.begin() + 1);
-	}
+	ans=cut(ans);
 	ans.bef[0] *= znak;
 	return ans;
 }
-Big operator/(Big a, Big b)
+Big Big::operator/(Big r)
 {
+	*this = cut(*this);
+	r = cut(r);
+	Big a = *this, b = r;
 	int znak = 1;
-	while (a.bef.size() > 1 && a.bef[0] == 0)
-		a.bef.erase(a.bef.begin(), a.bef.begin() + 1);
-	while (b.bef.size() > 1 && b.bef[0] == 0)
-		b.bef.erase(b.bef.begin(), b.bef.begin() + 1);
 	if (a.bef[0] < 0)
 	{
 		znak *= -1;
@@ -188,12 +199,11 @@ Big operator/(Big a, Big b)
 		cout << "деление на ноль" << endl;
 		return b;
 	}
-	vector<int>vec(1, 0);
-	Big ans{ vec };
+	Big ans{ long long(0) };
 	Big c = a;
 	Big t;
 	if (b > c)
-		return { vec };
+		return { ans };
 	for (int i = 0; b > t;)
 	{
 		if (c.bef.size() == 0)
@@ -201,7 +211,7 @@ Big operator/(Big a, Big b)
 		t.bef.push_back(c.bef[0]);
 		c.bef.erase(c.bef.begin(), c.bef.begin() + 1);
 	}
-	int x = 0;
+	long long x = 0;
 	while (c.bef.size()!=0 )
 	{
 		 x = 0;
@@ -225,16 +235,13 @@ Big operator/(Big a, Big b)
 	{
 		t.bef.erase(t.bef.begin(), t.bef.begin() + 1);
 	}
-	while ( ans.bef.size() > 1 && ans.bef[0] == 0)
-	{
-		ans.bef.erase(ans.bef.begin(), ans.bef.begin() + 1);
-	}
+	ans=cut(ans);
 	ans.bef[0] *= znak;
 	return ans;
 }
-Big operator%(Big a, Big b)
+Big Big::operator%(Big r)
 {
-	return a - b * (a / b);
+	return *this - r * (*this / r);
 }
 
 ostream& operator<<(ostream& os, const Big& k)
@@ -266,31 +273,11 @@ istream& operator>> (istream& is, Big& k)
 	return is;
 }
 
-void Big::operator=(Big a)
+bool operator>(Big a,Big b)
 {
-	bef.erase(bef.begin(), bef.end());
-    bef.resize(a.bef.size());
-    for (int i = 0; i < bef.size(); ++i)
-    {
-        bef[i] = a.bef[i];
-    }
-}
-bool operator >(Big l, Big r)
-{
-	/*if (l.bef.size() > 0)
-	{
-		while (l.bef[0] == 0)
-		{
-			l.bef.erase(l.bef.begin(), l.bef.begin() + 1);
-		}
-	}
-	if (r.bef.size()>0)
-	{
-		while (r.bef[0] == 0)
-		{
-			r.bef.erase(r.bef.begin(), r.bef.begin() + 1);
-		}
-	}*/
+	Big l = a,r=b;
+	l=cut(l);
+	r=cut(r);
 	if (l.bef.size() > r.bef.size())
 	{
 		return true;
@@ -301,28 +288,19 @@ bool operator >(Big l, Big r)
 	}
 	for (int i = 0; i < l.bef.size(); ++i)
 	{
-		if (l.bef[i] > r.bef[i])
+		if (abs(l.bef[i]) > abs(r.bef[i]))
 		{
 			return 1;
 		}
-		if (l.bef[i] < r.bef[i])
+		if (abs(l.bef[i]) < abs(r.bef[i]))
 		{
 			return 0;
 		}
 	}
 	return 0;
 }
-Big operator*(Big a, int k)
+Big operator*(Big a,long long k)
 {
-	int b = k;
-	Big c;
-	if(k==0)
-		c.bef.push_back(0);
-	while (b > 0)
-	{
-		c.bef.push_back(b % 10);
-		b = b / 10;
-	}
-	reverse(c.bef.begin(), c.bef.end());
+	Big c(k);
 	return a*c;
 }
