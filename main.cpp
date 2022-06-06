@@ -1,61 +1,42 @@
 #include "Big.h"
+
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-
-	string ch="Y";
-	while (ch != "N")
+	for (long long i = -10; i < 10; ++i)
 	{
-		Big a, b,c;
-		char z;
-		cout << "Введите первое число:";
-		cin >> a;
-		cout << "Введите действие(+,-,%,/): ";
-		cin >> z;
-		cout << "Введите второе число:";
-		cin >> b;
-		switch (int(z))
+		for (long long j = -10; j < 10; ++j)
 		{
-			case int('+') :
-				c = a + b;
-				break;
-			case int('-') :
-				c = a - b;
-				break;
-			case int('%') :
-				c = a % b;
-				break;
-			case int('/') :
-				c = a / b;
-				break;
-			case int('*') :
-				c = a * b;
-				break;
-			default:
-				break;
+			Big a(i), b(j);
+			if ((a * b) != Big(i * j))
+			{
+				cout << i << "*" << j << "=" << i * j << endl << a << "*" << b << "=" << Big(a * b) << endl;
+				return 0;
+			}
+			if ((a - b) != Big(i - j))
+			{
+				cout << i << "-" << j << "=" << i - j << endl << a << "-" << b << "=" << Big(a - b) << endl;
+				return 0;
+			}
+			if ((a + b) != Big(i + j))
+			{
+				cout << i << "+" << j << "=" << i + j << endl << a << "+" << b << "=" << Big(a + b) << endl;
+				return 0;
+			}
+			if (b != 0 && (a / b != Big(i / j)))
+			{
+				cout << i << "/" << j << "=" << i / j << endl << a << "/" << b << "=" << Big(a / b) << endl;
+				return 0;
+			}
+			if (b != 0 && (a % b != Big(i % j)))
+			{
+				cout << i << "%" << j << "=" << i % j << endl << a << "%" << b << "=" << Big(a % b) << endl;
+				return 0;
+			}
 		}
-		cout <<c<<endl;
-		cout << "Продолжить? (Y or N):";
-		cin >> ch;
 	}
-	/*Big a, b;
-	
-		cin >> a >> b;
-		cout << "+"<<a + b << endl;
-		cout << a - b << endl;
-		cout << b - a << endl;
-		cout << a * b << endl;
-		cout << "a/b:" << a / b << endl;
-		cout << "b/a:" << b / a << endl;
-		cout << "a%b:" << a % b << endl;
-		cout<< "b%a:" << b % a;
-	
-	cout << endl << a << " " << b;*/
-	/*Big o("123456789");
-	long long k = 111111111;
-	Big d(k);
-	Big c("12345678");
-	cout <<d<<endl<<o<<endl<< (o /d)<<endl<<o%d<<endl<<(o-c)%d;*/
+	cout << "Корректно";
 	return 0;
 }
